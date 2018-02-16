@@ -26,3 +26,23 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.qm-header {
+  background-color: #ccc;
+}
+
+.qm-event-container {
+  background-color: rgb(117, 172, 126);
+  border: 1px solid #000;
+}
+
+  .qm-event-container .col {
+    border: 1px solid #000;
+    vertical-align: middle;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+.qm-event-title {
+  background-color: #fc0;
+}
