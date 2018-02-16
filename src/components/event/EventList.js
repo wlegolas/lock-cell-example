@@ -28,25 +28,33 @@ class EventList extends React.Component {
   };
 
   onSubscribeSelectCell = (cellId) => {
-    this.lockCell(cellId);
+    this.selectCell(cellId);
   };
 
   onSelect = (cell) => {
-    if (this.cellIsUnlock(cell)) {
+    if (this.cellIsAvailable(cell)) {
       console.log(`Cell ${ cell.id } is unlocked`);
       handleEvent('select-cell', cell.id);
     }
   };
 
-  cellIsUnlock = (cellEl) => {
+  cellIsAvailable = (cellEl) => {
     return !cellEl.classList.contains( lockedCellCls );
   };
 
-  lockCell = (cellId) => {
+  selectCell = (cellId) => {
+    this.setAvailableCell(cellId, false);
+  };
+
+  unSelectCell = (cellId) => {
+    this.setAvailableCell(cellId, true);
+  };
+
+  setSelectedCell = (cellId, isAvailable) => {
     const cellEl = document.getElementById(cellId);
 
     if (cellEl) {
-      cellEl.classList.add(lockedCellCls);
+      cellEl.classList[isAvailable ? 'remove' : 'add'](lockedCellCls);
     }
   };
 
