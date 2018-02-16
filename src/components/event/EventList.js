@@ -4,6 +4,7 @@ import { handleEvent, subscribeSelectCell } from '../../api';
 
 const containerCls = 'qm-event-container';
 const cellSlotCls = 'qm-event-slot';
+const lockedCellCls = 'qm-cell-unvaliable';
 
 class EventList extends React.Component {
   constructor({props, state}) {
@@ -31,15 +32,21 @@ class EventList extends React.Component {
   };
 
   onSelect = (cell) => {
-    handleEvent('select-cell', cell.id);
+    if (this.cellIsUnlock(cell)) {
+      console.log(`Cell ${ cell.id } is unlocked`);
+      handleEvent('select-cell', cell.id);
+    }
+  };
+
+  cellIsUnlock = (cellEl) => {
+    return !cellEl.classList.contains( lockedCellCls );
   };
 
   lockCell = (cellId) => {
     const cellEl = document.getElementById(cellId);
 
     if (cellEl) {
-      console.log(`Received the cell id ${ cellId }`);
-      cellEl.classList.add('qm-cell-unvaliable');
+      cellEl.classList.add(lockedCellCls);
     }
   };
 
