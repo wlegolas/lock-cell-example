@@ -1,4 +1,5 @@
 import React from 'react';
+import EventList from '../event/EventList';
 import { Container, Row, Col } from 'reactstrap';
 
 class Main extends React.Component {
@@ -6,8 +7,9 @@ class Main extends React.Component {
     return (
         <Container>
           <Row>
-            <Col>Body</Col>
+            <Col><h1>Event's title will came here</h1></Col>
           </Row>
+          <EventList />
         </Container>
     );
   }

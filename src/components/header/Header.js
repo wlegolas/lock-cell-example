@@ -26,7 +26,7 @@ class Header extends React.Component {
     return (
       <header className="qm-header">
         <Navbar color="faded" light expand="md">
-          <NavbarBrand href="/" className="mr-auto">Quick massage</NavbarBrand>
+          <NavbarBrand href="/" className="mr-auto">App title</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
