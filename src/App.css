@@ -46,3 +46,11 @@
 .qm-event-title {
   background-color: #fc0;
 }
+
+.qm-cell-disabled {
+  background-color: #c2c2c2;
+}
+
+.qm-cell-unvaliable {
+  background-color: #f00;
+}
