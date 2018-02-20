@@ -9,10 +9,10 @@ const notifyOther = (client, eventName, ...params) => {
 };
 
 io.on('connection', (client) => {
-  client.on('select-cell', (cellId) => {
-    console.log(`Client was selected the cell ${ cellId }`);
+  client.on('timetableselected', (cellId) => {
+    console.log(`Client was selected the timetable ${ cellId }`);
 
-    notifyOther(client, 'select-cell', cellId);
+    notifyOther(client, 'timetableselected', cellId);
   });
 });
 

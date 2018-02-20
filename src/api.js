@@ -1,12 +1,12 @@
 import openSocket from 'socket.io-client';
 const  socket = openSocket('http://localhost:8000');
 
-function handleEvent(eventName, ...payload) {
+function publishEvent(eventName, ...payload) {
   socket.emit(eventName, payload);
 }
 
 function subscribeSelectCell(callback) {
-  socket.on('select-cell', cellId => callback(cellId));
+  socket.on('timetableselected', cellId => callback(cellId));
 } 
 
 function unsubscribeSelectCell(cellId, cb) {
@@ -15,4 +15,4 @@ function unsubscribeSelectCell(cellId, cb) {
   socket.emit('subscribe-select-cell', cellId);
 } 
 
-export { handleEvent, subscribeSelectCell, unsubscribeSelectCell }
+export { publishEvent, subscribeSelectCell, unsubscribeSelectCell }

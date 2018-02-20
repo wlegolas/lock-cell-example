@@ -1,60 +1,59 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import { handleEvent, subscribeSelectCell } from '../../api';
+import { publishEvent, subscribeSelectCell } from '../../api';
 
 const containerCls = 'qm-event-container';
-const cellSlotCls = 'qm-event-slot';
-const lockedCellCls = 'qm-cell-unvaliable';
+const timetableCls = 'qm-timetable';
+const lockedTimetableCls = 'qm-locked-timetable';
 
 class EventList extends React.Component {
   constructor({props, state}) {
     super(props);
 
-    subscribeSelectCell( this.onSubscribeSelectCell );
+    subscribeSelectCell( this.onSubscribeSelectTimetable );
   };
 
   componentDidMount() {
     const container = document.getElementsByClassName(containerCls)[0];
 
-    container.addEventListener('click', this.handleClick, false);
+    container.addEventListener('click', this.handleTimetableClick, false);
   };
 
-  handleClick = (event) => {
-    if ( event.target.classList.contains( cellSlotCls ) ) {
+  handleTimetableClick = (event) => {
+    if ( event.target.classList.contains( timetableCls ) ) {
         this.onSelect(event.target);
     }
 
     event.stopPropagation();
   };
 
-  onSubscribeSelectCell = (cellId) => {
-    this.selectCell(cellId);
+  onSubscribeSelectTimetable = (timetableId) => {
+    this.selectTimetable(timetableId);
   };
 
-  onSelect = (cell) => {
-    if (this.cellIsAvailable(cell)) {
-      console.log(`Cell ${ cell.id } is unlocked`);
-      handleEvent('select-cell', cell.id);
+  onSelect = (timetable) => {
+    if (this.timetableIsAvailable(timetable)) {
+      publishEvent('timetableselected', timetable.id);
     }
   };
 
-  cellIsAvailable = (cellEl) => {
-    return !cellEl.classList.contains( lockedCellCls );
+  timetableIsAvailable = (timetableEl) => {
+    return !timetableEl.classList.contains( lockedTimetableCls );
   };
 
-  selectCell = (cellId) => {
-    this.setAvailableCell(cellId, false);
+  selectTimetable = (timetableId) => {
+    this.setSelectedTimetable(timetableId, false);
   };
 
-  unSelectCell = (cellId) => {
-    this.setAvailableCell(cellId, true);
+  deselectTimetable = (timetableId) => {
+    this.setSelectedTimetable(timetableId, true);
   };
 
-  setSelectedCell = (cellId, isAvailable) => {
-    const cellEl = document.getElementById(cellId);
+  setSelectedTimetable = (timetableId, isAvailable) => {
+    const timetableEl = document.getElementById(timetableId);
 
-    if (cellEl) {
-      cellEl.classList[isAvailable ? 'remove' : 'add'](lockedCellCls);
+    if (timetableEl) {
+      timetableEl.classList[isAvailable ? 'remove' : 'add'](lockedTimetableCls);
     }
   };
 
@@ -66,15 +65,15 @@ class EventList extends React.Component {
         </Row>
         <Row>
           <Col>9:30</Col>
-          <Col className={ cellSlotCls } id="cell_1">user_1</Col>
+          <Col className={ timetableCls } id="cell_1">user_1</Col>
         </Row>
         <Row>
           <Col>9:45</Col>
-          <Col className={ cellSlotCls } id="cell_2">user_2</Col>
+          <Col className={ timetableCls } id="cell_2">user_2</Col>
         </Row>
         <Row>
           <Col>10:00</Col>
-          <Col className={ cellSlotCls } id="cell_3">user_3</Col>
+          <Col className={ timetableCls } id="cell_3">user_3</Col>
         </Row>
         <Row>
           <Col>10:15</Col>
