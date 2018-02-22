@@ -1,12 +1,22 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { publishEvent, subscribeSelectCell } from '../../api';
+import EventTimetable from './EventTimetable';
 
 const containerCls = 'qm-event-container';
 const timetableCls = 'qm-timetable';
 const lockedTimetableCls = 'qm-locked-timetable';
 
 class EventList extends React.Component {
+  state = {
+    timetables: [{
+      id: '1'
+    }, {
+      id: '2',
+      user: 'user_1'
+    }]
+  };
+  
   constructor({props, state}) {
     super(props);
 
@@ -58,29 +68,24 @@ class EventList extends React.Component {
   };
 
   render() {
+    const timetables = this.state.timetables.map(this.renderEventTimetables);
+
     return (
-      <Container className={ containerCls }>
-        <Row>
-          <Col className="qm-event-title">Fri, Feb 16</Col>
-        </Row>
-        <Row>
-          <Col>9:30</Col>
-          <Col className={ timetableCls } id="cell_1">user_1</Col>
-        </Row>
-        <Row>
-          <Col>9:45</Col>
-          <Col className={ timetableCls } id="cell_2">user_2</Col>
-        </Row>
-        <Row>
-          <Col>10:00</Col>
-          <Col className={ timetableCls } id="cell_3">user_3</Col>
-        </Row>
-        <Row>
-          <Col>10:15</Col>
-          <Col className="qm-cell-disabled"></Col>
-        </Row>
-      </Container>
+      <div>
+        <Container className={ containerCls }>
+          <Row>
+            <Col className="qm-event-title">Fri, Feb 16</Col>
+          </Row>
+          {timetables}
+        </Container>
+      </div>
     )
+  };
+
+  renderEventTimetables = (timetable) => {
+    return (
+      <EventTimetable key={timetable.id} timetable={timetable} onClick={this.handlerBorrow} />
+    );
   }
 };
 
